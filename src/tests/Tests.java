@@ -30,7 +30,7 @@ public class Tests {
 		
 		String[] columns = new String[] { "Month", "Temp" };
 
-		exporter.createFiles(data, columns);
+		exporter.createFiles(data, columns,1);
 	}
 }
 
