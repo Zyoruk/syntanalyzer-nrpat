@@ -16,23 +16,30 @@ import constants.Constants;
 
 public class ODTexport {
 	Constants K = new Constants();
-	public void createFiles(Object[][] data, String[] columns,int tableOp){
+	public void createFiles(TableModel model, int tableOp){
 		
-		TableModel model;  
 		try {
 			if(tableOp == 1){
 				final File file = new File (K._TABLE1);
-				model = new DefaultTableModel(data, columns);
 				SpreadSheet.createEmpty(model).saveAs(file);
-				SpreadSheet.createFromFile(file).addSheet("HojaB");
-				SpreadSheet.createFromFile(file).saveAs(file);
-				
-				
+
+				final Sheet sheet = SpreadSheet.createFromFile(file).getSheet(0);
+				final Sheet sheet2 = SpreadSheet.createFromFile(file).addSheet("Hoja2");
+				File outputFile = new File(K._TABLE1);
+				sheet.getSpreadSheet().saveAs(outputFile);
+				sheet2.getSpreadSheet().saveAs(outputFile);
+
+
 			}else if(tableOp == 2){
 				final File file = new File (K._TABLE2);
-				model = new DefaultTableModel(data, columns);
-				
-				SpreadSheet.createEmpty(model).saveAs(file);	
+				SpreadSheet.createEmpty(model).saveAs(file);
+
+				final Sheet sheet = SpreadSheet.createFromFile(file).getSheet(0);
+				final Sheet sheet2 = SpreadSheet.createFromFile(file).addSheet("Hoja2");
+				File outputFile = new File(K._TABLE2);
+				sheet.getSpreadSheet().saveAs(outputFile);
+				sheet2.getSpreadSheet().saveAs(outputFile);
+
 			}else{
 				System.out.println("err");
 			}

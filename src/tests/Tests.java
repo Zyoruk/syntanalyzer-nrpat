@@ -2,6 +2,9 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import org.junit.Test;
 
 import grammarCheck.GrammarChecker;
@@ -29,8 +32,8 @@ public class Tests {
 		data[5] = new Object[] { "June", 18 };
 		
 		String[] columns = new String[] { "Month", "Temp" };
-
-		exporter.createFiles(data, columns,1);
+		TableModel model = new DefaultTableModel(data, columns);
+		exporter.createFiles(model, 1);
 	}
 }
 

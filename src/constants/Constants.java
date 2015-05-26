@@ -1,5 +1,6 @@
 package constants;
 
+
 public class Constants {
 	public String _TABLE1 = "./tables/PredictivoNoRecursivoPorPila.ods";
 	public String _TABLE2 = "./tables/AscendentePredictivoPorTablas.ods";
