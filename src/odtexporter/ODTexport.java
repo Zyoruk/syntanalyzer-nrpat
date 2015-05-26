@@ -21,19 +21,18 @@ public class ODTexport {
 		TableModel model;  
 		try {
 			if(tableOp == 1){
-				final File file1 = new File(K._TABLE1);
-				model  = new DefaultTableModel(data, columns);
-				SpreadSheet.createEmpty(model).addSheet("Hojaa");
-				SpreadSheet.createFromFile(file1).addSheet("HojaB");
-//				Sheet sheet = SpreadSheet.createFromFile(file1).;
-//				sheet.getSpreadSheet().saveAs(file1);
-				SpreadSheet.createFromFile(file1).saveAs(file1);
+				final File file = new File (K._TABLE1);
+				model = new DefaultTableModel(data, columns);
+				SpreadSheet.createEmpty(model).saveAs(file);
+				SpreadSheet.createFromFile(file).addSheet("HojaB");
+				SpreadSheet.createFromFile(file).saveAs(file);
+				
 				
 			}else if(tableOp == 2){
-				final File file2 = new File (K._TABLE2);
+				final File file = new File (K._TABLE2);
 				model = new DefaultTableModel(data, columns);
 				
-				SpreadSheet.createEmpty(model).saveAs(file2);	
+				SpreadSheet.createEmpty(model).saveAs(file);	
 			}else{
 				System.out.println("err");
 			}

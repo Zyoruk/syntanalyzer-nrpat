@@ -21,7 +21,7 @@ public class Tests {
 	public void test2(){
 		ODTexport exporter = new ODTexport();
 		final Object[][] data = new Object[6][2];
-		data[0] = new Object[] { "January", 1 };
+		data[0] = new Object[] { "CACA", 1 };
 		data[1] = new Object[] { "February", 3 };
 		data[2] = new Object[] { "March", 8 };
 		data[3] = new Object[] { "April", 10 };
