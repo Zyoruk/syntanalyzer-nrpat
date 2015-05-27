@@ -1,7 +1,5 @@
 package tests;
 
-import static org.junit.Assert.*;
-
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
