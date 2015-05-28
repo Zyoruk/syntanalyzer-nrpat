@@ -363,7 +363,7 @@ public class SimpleList<K> implements ListInterface<K>, Iterable<K> {
     }
 
     @Override
-    public K getRootData() {
+    public K getData() {
         if (this.head == null){
             return null;
         }else{

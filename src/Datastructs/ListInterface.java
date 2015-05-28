@@ -17,7 +17,7 @@ public interface ListInterface<K> {
     public boolean insert(K pk);
     public boolean clear();
     public boolean cut();
-    public K getRootData();
+    public K getData();
     public K getTailData();
     public String describe();
 }

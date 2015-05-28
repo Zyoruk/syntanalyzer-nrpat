@@ -1,11 +1,7 @@
 package odtexporter;
 
-
 import java.io.*;
-
 import javax.swing.table.TableModel;
-
-
 import org.jopendocument.dom.spreadsheet.Sheet;
 //import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;

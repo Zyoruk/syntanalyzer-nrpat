@@ -1,14 +1,24 @@
 package tests;
 
+import java.io.IOException;
+
+import TableConstruct.FilesManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-import org.junit.Test;
+import Datastructs.SimpleList.SimpleList;
+//import org.junit.Test;
 
 import grammarCheck.GrammarChecker;
 import odtexporter.ODTexport;
 
 public class Tests {
+	
+	public void test3() throws IOException{
+		FilesManager file = new FilesManager();
+		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
+		file.FilesMan(matrix);
+		file.describe(matrix);
+	}
 
 	//@Test
 	public void test() {
@@ -18,7 +28,7 @@ public class Tests {
 		checker.checkGrammar(thePath);
 	}
 
-	@Test
+	//@Test
 	public void test2(){
 		ODTexport exporter = new ODTexport();
 		final Object[][] data = new Object[6][2];
