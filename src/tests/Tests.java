@@ -1,35 +1,18 @@
 package tests;
 
 import java.io.IOException;
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
-
-import TableConstruct.FilesManager;
-
->>>>>>> 5d064b1109298fd08980e295bd094d77f9840bab
+import tablebuilder.FilesManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import org.junit.Test;
-
 import Datastructs.SimpleList.SimpleList;
-//import org.junit.Test;
-
 import odtexporter.ODTexport;
-import tablebuilder.FilesManager;
 
 public class Tests {
 	
