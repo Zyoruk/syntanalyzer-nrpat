@@ -8,7 +8,7 @@ import javax.swing.table.TableModel;
 
 import Datastructs.SimpleList.SimpleList;
 
-/** @author zyoruk */
+/** @author zyoruk , jeukel */
 public class PredictiveNonRecursive {
 
     Object[][]	      steps;
@@ -41,7 +41,7 @@ public class PredictiveNonRecursive {
     }
 
     @SuppressWarnings("unchecked")
-    private Object[] getFirstOf(String pProd) {
+    private String[] getFirstOf(String pProd) {
 
 	final SimpleList < Object[] > temp = grammar;
 	SimpleList < String > temp2 = null;
@@ -99,9 +99,9 @@ public class PredictiveNonRecursive {
 	return getFirstsAux( temp3 );
     }
 
-    private Object[] getFirstsAux(SimpleList < String > pIn) {
+    private String[] getFirstsAux(SimpleList < String > pIn) {
 
-	final Object[] toreturn = new Object[pIn.length()];
+	final String[] toreturn = new String[pIn.length()];
 	final SimpleList < String > temp = pIn;
 	for ( int i = 0; i < pIn.length(); i++ ) {
 	    toreturn[i] = temp.getData();
@@ -123,7 +123,7 @@ public class PredictiveNonRecursive {
 		SimpleList<Object[]> matrixC = new SimpleList<>(matrix);
 		SimpleList<Object[]> maTMP = new SimpleList<>(matrix);
 		SimpleList<Object[]> followsMatrix = new SimpleList<Object[]>();
-		SimpleList<Character> follows = new SimpleList<Character>();
+		SimpleList<String> follows = new SimpleList<String>();
 		String[] produc = new String[matrix.length()];
 		
 		//Make list of Productions
@@ -147,18 +147,34 @@ public class PredictiveNonRecursive {
 				while(((SimpleList<Object[]>) matrixC.getData()[1]).getData() != null){
 					StringBuilder sb = new StringBuilder(imp);
 					
-					if(sb.indexOf(produc[o]) == -1){ //If production not found
+					//If production not found
+					if(sb.indexOf(produc[o]) == -1){ 
 						((SimpleList<Object[]>) matrixC.getData()[1]).delete(); //deletes a node
 					
 					}else{
-						if((sb.indexOf((String) matrixC.getData()[1])+1) > sb.length()){ //Next is null
+						//Next is null
+						if((sb.indexOf((String) matrixC.getData()[1])+1) >= sb.length()){ 
 							//Do not repeat follows
-							if(!follows.exists('$')){
-								follows.append('$');
+							if(!follows.exists(Character.toString('$'))){
+								follows.append(Character.toString('$'));
 							}
 						}else{
-							//If found, gets follower 
-							follows.append(sb.charAt(sb.indexOf((String) matrixC.getData()[0]) + 1)); 
+							//if next is string
+							if(sb.indexOf((String) matrixC.getData()[1]) == '('){
+								int u = (sb.indexOf(")")); String t;
+								
+								if((sb.indexOf(")")+1) == ('+' | '?' | '*')){
+									t = sb.substring( 0 , u+1 );
+								}else{
+									t = sb.substring( 0 , u );
+								}
+								follows.append(t);
+							}else{
+								//If found, gets follower 
+								char v = sb.charAt(sb.indexOf((String) matrixC.getData()[0]) + 1);
+								follows.append(Character.toString(v)); 
+							}
+							
 						}
 					}
 				}
@@ -174,16 +190,19 @@ public class PredictiveNonRecursive {
 		}
 	}
 	
-	private SimpleList<Character> replaceFirstOf(SimpleList<Character> follows){
+	private SimpleList<String> replaceFirstOf(SimpleList<String> follows){
 		//Doing follows list
-				SimpleList<Character> tmp = new SimpleList<Character>();
+				SimpleList<String> tmp = new SimpleList<String>();
 				while(follows.getData() != null){
 					
-					char first = follows.getData();			
-					if(!Character.isUpperCase(first)){
+					String first = follows.getData();			
+					if(!Character.isUpperCase(first.charAt(0))){
 						tmp.append(first);
 					}else{
-						tmp.append(getFirstOf(Character.toString(first)));
+						String[] str = getFirstOf(first);
+						for(int u = 0; u < str.length; u++){
+							tmp.append(str[u]);
+						}
 					}			
 				}
 				follows = tmp; //Replace Upper with firstOf.
