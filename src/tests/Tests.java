@@ -26,10 +26,10 @@ public class Tests {
 	
 	@Test
 	public void test5() throws IOException{
-		FilesManager file = new FilesManager();
-		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
-		file.FilesMan(matrix);
-		file.describe(matrix);
+		//FilesManager file = new FilesManager();
+		//SimpleList<Object[]> matrix = new SimpleList<Object[]>();
+		//file.FilesMan(matrix);
+		//file.describe(matrix);
 		
 	}
 
