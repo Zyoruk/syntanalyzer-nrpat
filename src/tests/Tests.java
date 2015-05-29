@@ -2,27 +2,30 @@ package tests;
 
 import java.io.IOException;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+<<<<<<< HEAD
 import odtexporter.ODTexport;
+=======
+>>>>>>> 17cbcb0b59d891ea9278230ff2f7ec88251b0fa0
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
 import tablebuilder.FilesManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import org.junit.Test;
+<<<<<<< HEAD
 //import org.junit.Test;
 import Datastructs.SimpleList.SimpleList;
 //import org.junit.Test;
+=======
+import Datastructs.SimpleList.SimpleList;
+import odtexporter.ODTexport;
+>>>>>>> 17cbcb0b59d891ea9278230ff2f7ec88251b0fa0
 
 public class Tests {
-	
+	@Test
 	public void test3() throws IOException{
 		FilesManager file = new FilesManager();
 		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
