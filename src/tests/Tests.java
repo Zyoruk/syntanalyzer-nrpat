@@ -15,11 +15,13 @@ import java.io.Reader;
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
 
-=======
 import TableConstruct.FilesManager;
->>>>>>> 0a39ab914a0e25222de3804235d98906823067bd
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import org.junit.Test;
+
 import Datastructs.SimpleList.SimpleList;
 //import org.junit.Test;
 
@@ -66,7 +68,7 @@ public class Tests {
 	}
 	
 	//@Test
-	public void test3(){
+	public void test4(){
 		String t = "abs | abc";
 		String[] t2 = t.split(" ");
 		StringBuilder t4 = new StringBuilder();
