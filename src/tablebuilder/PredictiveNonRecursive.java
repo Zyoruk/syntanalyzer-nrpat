@@ -32,6 +32,7 @@ public class PredictiveNonRecursive {
 
 	getRows();
 	calcFirsts();
+
 	columns = new String[pGrammar.length()];
 	final TableModel table = new DefaultTableModel( data , columns );
 	grammar = pGrammar;
@@ -62,9 +63,7 @@ public class PredictiveNonRecursive {
 		}
 	    }
 
-	    if ( temp2.getData().charAt( 1 ) == '+'
-		    | temp2.getData().charAt( 1 ) == '?'
-		    | temp2.getData().charAt( 1 ) == '*' ) {
+	    if ( temp2.getData().charAt( 1 ) == ( '+' | '?' | '*' ) ) {
 		stB.append( temp2.getData().charAt( 0 ) );
 		stB.append( temp2.getData().charAt( 1 ) );
 		temp3.append( stB.toString() );
@@ -72,14 +71,26 @@ public class PredictiveNonRecursive {
 	    } else if ( temp2.getData().charAt( 0 ) == '(' ) {
 		final int RBRACK = temp2.getData().indexOf( ')' );
 		stB.append( temp2.getData().substring( 0 , RBRACK ) );
-		if ( temp2.getData().charAt( RBRACK + 1 ) == '+'
-			| temp2.getData().charAt( RBRACK + 1 ) == '?'
-			| temp2.getData().charAt( RBRACK + 1 ) == '*' ) {
+		if ( temp2.getData().charAt( RBRACK + 1 ) == ( '+' | '?' | '*' ) ) {
 		    stB.append( temp2.getData().charAt( RBRACK + 1 ) );
 		    temp3.append( stB.toString() );
 
 		}
 		temp3.append( stB.toString() );
+	    } else if ( Character.isDigit( temp2.getData().charAt( 0 ) ) ) {
+		stB.append( temp2.getData().charAt( 0 ) );
+		for ( int intcount = 1; intcount < temp2.getData().length(); intcount++ ) {
+		    if ( Character.isDigit( temp2.getData().charAt( intcount ) ) ) {
+			stB.append( temp2.getData().charAt( intcount ) );
+		    } else {
+			break;
+		    }
+		}
+		temp3.append( stB.toString() );
+	    } else if ( temp2.getData().substring( 0 , 1 ) == "id" ) {
+		stB.append( temp2.getData().substring( 0 , 1 ) );
+		temp3.append( stB.toString() );
+
 	    } else {
 		stB.append( temp2.getData().charAt( 0 ) );
 		temp3.append( stB.toString() );
