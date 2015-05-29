@@ -12,16 +12,25 @@ import tablebuilder.FilesManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.junit.Test;
-//import org.junit.Test;
 import Datastructs.SimpleList.SimpleList;
 
 public class Tests {
+	
 	@Test
 	public void test3() throws IOException{
 		FilesManager file = new FilesManager();
 		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
 		file.FilesMan(matrix);
 		file.describe(matrix);
+	}
+	
+	@Test
+	public void test5() throws IOException{
+		FilesManager file = new FilesManager();
+		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
+		file.FilesMan(matrix);
+		file.describe(matrix);
+		
 	}
 
 	@Test

@@ -16,6 +16,7 @@ public class PredictiveNonRecursive {
     String[]		rows;
     Object[][]	      data;
     SimpleList < Object[] > grammar;
+    SimpleList<Object[]> followsMatrix;
     TableModel	      tb = new DefaultTableModel();
 
     private void calcFirsts() {
@@ -36,6 +37,7 @@ public class PredictiveNonRecursive {
 	columns = new String[pGrammar.length()];
 	final TableModel table = new DefaultTableModel( data , columns );
 	grammar = pGrammar;
+	followsMatrix = new SimpleList<Object[]>();
 	return table;
 
     }
@@ -119,12 +121,11 @@ public class PredictiveNonRecursive {
     }
     
     @SuppressWarnings("unchecked")
-	public void getFollows(SimpleList<Object[]> matrix){
-		SimpleList<Object[]> matrixC = new SimpleList<>(matrix);
-		SimpleList<Object[]> maTMP = new SimpleList<>(matrix);
-		SimpleList<Object[]> followsMatrix = new SimpleList<Object[]>();
+	public void getFollows(){
+		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);
+		SimpleList<Object[]> maTMP = new SimpleList<>(grammar);
 		SimpleList<String> follows = new SimpleList<String>();
-		String[] produc = new String[matrix.length()];
+		String[] produc = new String[grammar.length()];
 		
 		//Make list of Productions
 		int i = 0;
