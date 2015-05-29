@@ -1,7 +1,8 @@
 package tests;
 
-import static org.junit.Assert.*;
+import java.io.IOException;
 
+<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,14 +15,24 @@ import java.io.Reader;
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
 
+=======
+import TableConstruct.FilesManager;
+>>>>>>> 0a39ab914a0e25222de3804235d98906823067bd
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-import org.junit.Test;
+import Datastructs.SimpleList.SimpleList;
+//import org.junit.Test;
 
 import odtexporter.ODTexport;
 
 public class Tests {
+	
+	public void test3() throws IOException{
+		FilesManager file = new FilesManager();
+		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
+		file.FilesMan(matrix);
+		file.describe(matrix);
+	}
 
 	@Test
 	public void test() {
