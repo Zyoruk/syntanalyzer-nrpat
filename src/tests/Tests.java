@@ -2,7 +2,6 @@ package tests;
 
 import java.io.IOException;
 
-import TableConstruct.FilesManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import Datastructs.SimpleList.SimpleList;
@@ -10,6 +9,7 @@ import Datastructs.SimpleList.SimpleList;
 
 import grammarCheck.GrammarChecker;
 import odtexporter.ODTexport;
+import tablebuilder.FilesManager;
 
 public class Tests {
 	
