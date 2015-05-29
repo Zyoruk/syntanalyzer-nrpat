@@ -379,5 +379,24 @@ public class SimpleList<K> implements ListInterface<K>, Iterable<K> {
             return this.tail.getElem();
         }
     }
+<<<<<<< HEAD
+    
+    public K getElementAt(int pIndex){
+    	if (pIndex >= this.length){
+    		K k = null;
+    		return k;
+    	}
+    	SimpleListNode<K> temp = this.head;
+    	int tempIn = pIndex;
+    	while(tempIn != 0){
+    		temp = temp.getNext();
+    		tempIn--;
+    	}
+    	
+		return temp.getElem();
+    	
+    }
+=======
+>>>>>>> 0a39ab914a0e25222de3804235d98906823067bd
 }
 
