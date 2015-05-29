@@ -2,29 +2,47 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
+import grammarCheck.GrammarChecker;
+import grammarCheck.GrammarChecker.lexerror;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import org.junit.Test;
 
-import grammarCheck.GrammarChecker;
 import odtexporter.ODTexport;
 
 public class Tests {
 
-	//@Test
+	@Test
 	public void test() {
 		//fail("Not yet implemented");
-		String thePath = "./syntanalyzer-nrpat/grammar/Gramatica.txt";
-		GrammarChecker checker = new GrammarChecker();
-		checker.checkGrammar(thePath);
+		String thePath = "./grammar/Gramatica.txt";
+		Reader r;
+		try {
+			//r = new FileReader(thePath);
+			 r =new InputStreamReader(new FileInputStream(thePath), "Cp1252");
+			 new GrammarChecker(new BufferedReader(r));
+		} catch (IOException | lexerror e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	@Test
+	//@Test
 	public void test2(){
 		ODTexport exporter = new ODTexport();
 		final Object[][] data = new Object[6][2];
-		data[0] = new Object[] { "CACA", 1 };
+		data[0] = new Object[] { "January", 1 };
 		data[1] = new Object[] { "February", 3 };
 		data[2] = new Object[] { "March", 8 };
 		data[3] = new Object[] { "April", 10 };
@@ -34,6 +52,21 @@ public class Tests {
 		String[] columns = new String[] { "Month", "Temp" };
 		TableModel model = new DefaultTableModel(data, columns);
 		exporter.createFiles(model, 1);
+	}
+	
+	//@Test
+	public void test3(){
+		String t = "abs | abc";
+		String[] t2 = t.split(" ");
+		StringBuilder t4 = new StringBuilder();
+		for(int i =0; i < t2.length ;i++){
+			String t3 = t2[i];
+			System.out.println(t3);
+			t4.append(t3);
+			System.out.println(t4);
+		}
+		t4.replace(t4.indexOf("|"), t4.indexOf("|")+1, " ");
+		System.out.println(t4);
 	}
 }
 
