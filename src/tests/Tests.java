@@ -15,7 +15,7 @@ import Datastructs.SimpleList.SimpleList;
 import odtexporter.ODTexport;
 
 public class Tests {
-	
+	@Test
 	public void test3() throws IOException{
 		FilesManager file = new FilesManager();
 		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
