@@ -27,8 +27,8 @@ public class FilesManager {
 
 	    System.out.println( "TERMINALES:" );
 	    System.out
-		    .println( ( ( SimpleList < String > ) matrix.getData()[1] )
-			    .describe() );
+	    .println( ( ( SimpleList < String > ) matrix.getData()[1] )
+		    .describe() );
 
 	    matrix.delete();
 	}
