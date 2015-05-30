@@ -27,8 +27,8 @@ public class FilesManager {
 
 	    System.out.println( "TERMINALES:" );
 	    System.out
-		    .println( ( ( SimpleList < String > ) matrix.getData()[1] )
-			    .describe() );
+	    .println( ( ( SimpleList < String > ) matrix.getData()[1] )
+		    .describe() );
 
 	    matrix.delete();
 	}
@@ -37,7 +37,7 @@ public class FilesManager {
 
     public void FilesMan(SimpleList < Object[] > matrix) throws IOException {
 
-	final File tmp = new File( "Gramatica.txt" );
+	final File tmp = new File( "./grammar/Gramatica.txt" );
 	final BufferedReader arch = new BufferedReader( new FileReader( tmp ) );
 	String line;
 
