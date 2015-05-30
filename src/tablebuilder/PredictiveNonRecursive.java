@@ -40,7 +40,6 @@ public class PredictiveNonRecursive {
     }
 
     public TableModel createTable(SimpleList < Object[] > pGrammar) {
-<<<<<<< HEAD
     grammar = pGrammar;
     followsMatrix = new SimpleList<Object[]>();
 	//getRows();
@@ -51,8 +50,8 @@ public class PredictiveNonRecursive {
 	//columns = new String[pGrammar.length()];
 	final TableModel table = new DefaultTableModel( data , columns );
 	//
-=======
 
+	/*
 	tb = new DefaultTableModel();
 	grammar = pGrammar;
 	calcFirsts();
@@ -60,8 +59,7 @@ public class PredictiveNonRecursive {
 	getColumns();
 	final TableModel table = new DefaultTableModel( firstsArr , columns );
 	grammar = pGrammar;
-	followsMatrix = new SimpleList < Object[] >();
->>>>>>> 33a39627b67a5b63d5fe3b1167460604603b4542
+	followsMatrix = new SimpleList < Object[] >();*/
 	return table;
 
     }
@@ -206,85 +204,6 @@ public class PredictiveNonRecursive {
 	return toreturn;
     }
 
-    @SuppressWarnings("unchecked")
-    public void getFollows() {
-
-	final SimpleList < Object[] > matrixC = new SimpleList <>( grammar );
-	final SimpleList < Object[] > maTMP = new SimpleList <>( grammar );
-	SimpleList < String > follows = new SimpleList < String >();
-	final String[] produc = new String[grammar.length()];
-
-	// Make list of Productions
-	int i = 0;
-	while ( maTMP.getData() != null ) {
-	    produc[i] = ( String ) maTMP.getData()[1];
-	    maTMP.delete();
-	    i++;
-	}
-
-	// find follow of each Production
-	for ( final String element : produc ) {
-
-	    // find follows by implies of one production
-	    while ( matrixC.getData() != null ) {
-
-		final SimpleList < String > implies = ( SimpleList < String > ) matrixC
-			.getData()[1];
-		final String imp = implies.getData();
-
-		// find follows by production
-		while ( ( ( SimpleList < Object[] > ) matrixC.getData()[1] )
-			.getData() != null ) {
-		    final StringBuilder sb = new StringBuilder( imp );
-
-		    // If production not found
-		    if ( sb.indexOf( element ) == -1 ) {
-			( ( SimpleList < Object[] > ) matrixC.getData()[1] )
-				.delete(); // deletes a node
-
-		    } else {
-			// Next is null
-			if ( ( sb.indexOf( ( String ) matrixC.getData()[1] ) + 1 ) >= sb
-				.length() ) {
-			    // Do not repeat follows
-			    if ( !follows.exists( Character.toString( '$' ) ) ) {
-				follows.append( Character.toString( '$' ) );
-			    }
-			} else {
-			    // if next is string
-			    if ( sb.indexOf( ( String ) matrixC.getData()[1] ) == '(' ) {
-				final int u = ( sb.indexOf( ")" ) );
-				String t;
-
-				if ( ( sb.indexOf( ")" ) + 1 ) == ( '+' | '?' | '*' ) ) {
-				    t = sb.substring( 0 , u + 1 );
-				} else {
-				    t = sb.substring( 0 , u );
-				}
-				follows.append( t );
-			    } else {
-				// If found, gets follower
-				final char v = sb
-					.charAt( sb.indexOf( ( String ) matrixC
-						.getData()[0] ) + 1 );
-				follows.append( Character.toString( v ) );
-			    }
-
-			}
-		    }
-		}
-		matrixC.delete();
-	    }
-	    // Sets new follows matrix.
-	    final Object[] arr = new Object[2];
-	    arr[0] = element;
-	    follows = replaceFirstOf( follows );
-	    arr[1] = follows;
-	    follows.clear();
-	    followsMatrix.append( arr );
-	}
-    }
-
     private String[] getRows() {
 
 	final SimpleList < Object[] > temp = grammar;
@@ -294,7 +213,6 @@ public class PredictiveNonRecursive {
 	}
 	return rows;
     }
-<<<<<<< HEAD
     
     @SuppressWarnings("unchecked")
 	public void getFollows(){
@@ -416,30 +334,8 @@ public class PredictiveNonRecursive {
 		    matrix.delete();
 		}
 	}
-=======
 
-    private SimpleList < String > replaceFirstOf(SimpleList < String > follows) {
-
-	// Doing follows list
-	final SimpleList < String > tmp = new SimpleList < String >();
-	while ( follows.getData() != null ) {
-
-	    final String first = follows.getData();
-	    if ( !Character.isUpperCase( first.charAt( 0 ) ) ) {
-		tmp.append( first );
-	    } else {
-		final String[] str = getFirstOf( first );
-		for ( final String element : str ) {
-		    tmp.append( element );
-		}
-	    }
-	}
-	follows = tmp; // Replace Upper with firstOf.
-	return follows;
-    }
-
-    private buildTable() {
->>>>>>> 33a39627b67a5b63d5fe3b1167460604603b4542
+    private void buildTable() {
 
 	// recorrer la lista de primeros
 	// recorrer la lista de siguiente

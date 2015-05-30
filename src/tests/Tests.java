@@ -2,34 +2,22 @@ package tests;
 
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-<<<<<<< HEAD
 import odtexporter.ODTexport;
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
 import tablebuilder.FilesManager;
 import tablebuilder.PredictiveNonRecursive;
-=======
-
->>>>>>> 33a39627b67a5b63d5fe3b1167460604603b4542
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-import odtexporter.ODTexport;
-
 import org.junit.Test;
-
-import tablebuilder.FilesManager;
-import tablebuilder.PredictiveNonRecursive;
 import Datastructs.SimpleList.SimpleList;
 
 public class Tests {
-<<<<<<< HEAD
 	
 	//@Test
 	public void test3() throws IOException{
@@ -63,24 +51,6 @@ public class Tests {
 			e.printStackTrace();
 		}
 	}
-=======
-
-    public void test() {
->>>>>>> 33a39627b67a5b63d5fe3b1167460604603b4542
-
-	// fail("Not yet implemented");
-	final String thePath = "./grammar/Gramatica.txt";
-	Reader r;
-	try {
-	    // r = new FileReader(thePath);
-	    r = new InputStreamReader( new FileInputStream( thePath ) ,
-		    "Cp1252" );
-	    new GrammarChecker( new BufferedReader( r ) );
-	} catch ( IOException | lexerror e ) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
-    }
 
     public void test2() {
 
@@ -99,16 +69,6 @@ public class Tests {
     }
 
     // @Test
-    @Test
-    public void test3() throws IOException {
-
-	final FilesManager file = new FilesManager();
-	final SimpleList < Object[] > matrix = new SimpleList < Object[] >();
-	file.FilesMan( matrix );
-	file.describe( matrix );
-    }
-
-    // @Test
     public void test4() {
 
 	final String t = "abs | abc";
@@ -121,17 +81,6 @@ public class Tests {
 	}
 	t4.replace( t4.indexOf( "|" ) , t4.indexOf( "|" ) + 1 , " " );
 	System.out.println( t4 );
-    }
-
-    // @Test
-    @Test
-    public void test5() throws IOException {
-
-	// FilesManager file = new FilesManager();
-	// SimpleList<Object[]> matrix = new SimpleList<Object[]>();
-	// file.FilesMan(matrix);
-	// file.describe(matrix);
-
     }
 
     @Test
