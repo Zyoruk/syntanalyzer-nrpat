@@ -8,14 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-<<<<<<< HEAD
 
-=======
-import odtexporter.ODTexport;
-import grammarCheck.GrammarChecker;
-import grammarCheck.GrammarChecker.lexerror;
-import tablebuilder.FilesManager;
->>>>>>> 9b82987be5821b7d42ac2b9de2aa27151a735d2b
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -28,28 +21,7 @@ import tablebuilder.PredictiveNonRecursive;
 import Datastructs.SimpleList.SimpleList;
 
 public class Tests {
-<<<<<<< HEAD
-=======
-	
-	@Test
-	public void test3() throws IOException{
-		FilesManager file = new FilesManager();
-		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
-		file.FilesMan(matrix);
-		file.describe(matrix);
-	}
-	
-	@Test
-	public void test5() throws IOException{
-		//FilesManager file = new FilesManager();
-		//SimpleList<Object[]> matrix = new SimpleList<Object[]>();
-		//file.FilesMan(matrix);
-		//file.describe(matrix);
-		
-	}
->>>>>>> 9b82987be5821b7d42ac2b9de2aa27151a735d2b
 
-    // @Test
     public void test() {
 
 	// fail("Not yet implemented");
@@ -66,7 +38,6 @@ public class Tests {
 	}
     }
 
-    // @Test
     public void test2() {
 
 	final ODTexport exporter = new ODTexport();
@@ -84,6 +55,7 @@ public class Tests {
     }
 
     // @Test
+    @Test
     public void test3() throws IOException {
 
 	final FilesManager file = new FilesManager();
@@ -105,6 +77,17 @@ public class Tests {
 	}
 	t4.replace( t4.indexOf( "|" ) , t4.indexOf( "|" ) + 1 , " " );
 	System.out.println( t4 );
+    }
+
+    // @Test
+    @Test
+    public void test5() throws IOException {
+
+	// FilesManager file = new FilesManager();
+	// SimpleList<Object[]> matrix = new SimpleList<Object[]>();
+	// file.FilesMan(matrix);
+	// file.describe(matrix);
+
     }
 
     @Test
