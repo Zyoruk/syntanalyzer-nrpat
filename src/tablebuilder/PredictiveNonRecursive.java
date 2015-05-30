@@ -8,7 +8,7 @@ import javax.swing.table.TableModel;
 
 import Datastructs.SimpleList.SimpleList;
 
-/** @author zyoruk */
+/** @author zyoruk , jeukel */
 public class PredictiveNonRecursive {
 
     Object[][]	      steps;
@@ -17,6 +17,7 @@ public class PredictiveNonRecursive {
     Object[][]	      firstsArr;
     Object[][]	      data;
     SimpleList < Object[] > grammar;
+    SimpleList<Object[]> followsMatrix;
     TableModel	      tb = new DefaultTableModel();
 
     private void calcFirsts() {
@@ -44,13 +45,19 @@ public class PredictiveNonRecursive {
 	calcFirsts();
 
 	columns = new String[pGrammar.length()];
+<<<<<<< HEAD
 	final TableModel table = new DefaultTableModel( firstsArr , rows );
+=======
+	final TableModel table = new DefaultTableModel( data , columns );
+	grammar = pGrammar;
+	followsMatrix = new SimpleList<Object[]>();
+>>>>>>> 9b82987be5821b7d42ac2b9de2aa27151a735d2b
 	return table;
 
     }
 
     @SuppressWarnings("unchecked")
-    private Object[] getFirstOf(String pProd) {
+    private String[] getFirstOf(String pProd) {
 
 	final SimpleList < Object[] > tempGrammar = new SimpleList <>( grammar );
 	SimpleList < String > rightSideOfProd = null;
@@ -153,9 +160,9 @@ public class PredictiveNonRecursive {
 	return getFirstsAux( temp3 );
     }
 
-    private Object[] getFirstsAux(SimpleList < String > pIn) {
+    private String[] getFirstsAux(SimpleList < String > pIn) {
 
-	final Object[] toreturn = new Object[pIn.length()];
+	final String[] toreturn = new String[pIn.length()];
 	final SimpleList < String > temp = pIn;
 	int i = 0;
 	while ( temp.getData() != null ) {
@@ -175,5 +182,95 @@ public class PredictiveNonRecursive {
 	}
 	return rows;
     }
+    
+    @SuppressWarnings("unchecked")
+	public void getFollows(){
+		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);
+		SimpleList<Object[]> maTMP = new SimpleList<>(grammar);
+		SimpleList<String> follows = new SimpleList<String>();
+		String[] produc = new String[grammar.length()];
+		
+		//Make list of Productions
+		int i = 0;
+		while(maTMP.getData() != null){
+			produc[i] = (String) maTMP.getData()[1];
+			maTMP.delete();
+			i++;
+		}
+		
+		//find follow of each Production
+		for(int o = 0; o < produc.length; o++){
+			
+			//find follows by implies of one production
+			while(matrixC.getData() != null){
+				
+				SimpleList<String> implies = (SimpleList<String>) matrixC.getData()[1];
+				String imp = implies.getData();
+				
+				//find follows by production
+				while(((SimpleList<Object[]>) matrixC.getData()[1]).getData() != null){
+					StringBuilder sb = new StringBuilder(imp);
+					
+					//If production not found
+					if(sb.indexOf(produc[o]) == -1){ 
+						((SimpleList<Object[]>) matrixC.getData()[1]).delete(); //deletes a node
+					
+					}else{
+						//Next is null
+						if((sb.indexOf((String) matrixC.getData()[1])+1) >= sb.length()){ 
+							//Do not repeat follows
+							if(!follows.exists(Character.toString('$'))){
+								follows.append(Character.toString('$'));
+							}
+						}else{
+							//if next is string
+							if(sb.indexOf((String) matrixC.getData()[1]) == '('){
+								int u = (sb.indexOf(")")); String t;
+								
+								if((sb.indexOf(")")+1) == ('+' | '?' | '*')){
+									t = sb.substring( 0 , u+1 );
+								}else{
+									t = sb.substring( 0 , u );
+								}
+								follows.append(t);
+							}else{
+								//If found, gets follower 
+								char v = sb.charAt(sb.indexOf((String) matrixC.getData()[0]) + 1);
+								follows.append(Character.toString(v)); 
+							}
+							
+						}
+					}
+				}
+				matrixC.delete();
+			}
+			//Sets new follows matrix.
+			Object[] arr = new Object[2];
+			arr[0] = produc[o];
+			follows = replaceFirstOf(follows);
+			arr[1] = follows;
+			follows.clear();
+			followsMatrix.append(arr);
+		}
+	}
+	
+	private SimpleList<String> replaceFirstOf(SimpleList<String> follows){
+		//Doing follows list
+				SimpleList<String> tmp = new SimpleList<String>();
+				while(follows.getData() != null){
+					
+					String first = follows.getData();			
+					if(!Character.isUpperCase(first.charAt(0))){
+						tmp.append(first);
+					}else{
+						String[] str = getFirstOf(first);
+						for(int u = 0; u < str.length; u++){
+							tmp.append(str[u]);
+						}
+					}			
+				}
+				follows = tmp; //Replace Upper with firstOf.
+				return follows;
+	}
 
 }
