@@ -9,6 +9,7 @@ import odtexporter.ODTexport;
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
 import tablebuilder.FilesManager;
+import tablebuilder.PredictiveNonRecursive;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import Datastructs.SimpleList.SimpleList;
 
 public class Tests {
 	
-	@Test
+	//@Test
 	public void test3() throws IOException{
 		FilesManager file = new FilesManager();
 		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
@@ -26,14 +27,15 @@ public class Tests {
 	
 	@Test
 	public void test5() throws IOException{
-		//FilesManager file = new FilesManager();
-		//SimpleList<Object[]> matrix = new SimpleList<Object[]>();
-		//file.FilesMan(matrix);
+		FilesManager file = new FilesManager();
+		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
+		file.FilesMan(matrix);
 		//file.describe(matrix);
-		
+		@SuppressWarnings("unused")
+		final TableModel table = new PredictiveNonRecursive().createTable(matrix);
 	}
 
-	@Test
+	//@Test
 	public void test() {
 		//fail("Not yet implemented");
 		String thePath = "./grammar/Gramatica.txt";

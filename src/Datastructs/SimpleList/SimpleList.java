@@ -25,8 +25,7 @@ public class SimpleList < K > implements ListInterface < K >, Iterable < K > {
     /** Copy constructor
      * 
      * @param U */
-    public SimpleList(SimpleList < K > U) {
-
+    public SimpleList(SimpleList<K> U) {
 	this.length = U.length;
 	this.head = U.head;
 	this.tail = U.tail;

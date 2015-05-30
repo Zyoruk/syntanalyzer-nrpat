@@ -30,14 +30,16 @@ public class PredictiveNonRecursive {
     }
 
     public TableModel createTable(SimpleList < Object[] > pGrammar) {
+    grammar = pGrammar;
+    followsMatrix = new SimpleList<Object[]>();
+	//getRows();
+	//calcFirsts();
+	getFollows();
+	describe(this.followsMatrix);
 
-	getRows();
-	calcFirsts();
-
-	columns = new String[pGrammar.length()];
+	//columns = new String[pGrammar.length()];
 	final TableModel table = new DefaultTableModel( data , columns );
-	grammar = pGrammar;
-	followsMatrix = new SimpleList<Object[]>();
+	//
 	return table;
 
     }
@@ -122,46 +124,48 @@ public class PredictiveNonRecursive {
     
     @SuppressWarnings("unchecked")
 	public void getFollows(){
-		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);
-		SimpleList<Object[]> maTMP = new SimpleList<>(grammar);
-		SimpleList<String> follows = new SimpleList<String>();
+		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);;
+		SimpleList<String> follows;
+		SimpleList<String> implies;
 		String[] produc = new String[grammar.length()];
 		
-		//Make list of Productions
 		int i = 0;
-		while(maTMP.getData() != null){
-			produc[i] = (String) maTMP.getData()[1];
-			maTMP.delete();
+		while(matrixC.getData() != null){
+			produc[i] = (String) matrixC.getData()[0];
+			matrixC.delete();
 			i++;
 		}
 		
 		//find follow of each Production
-		for(int o = 0; o < produc.length; o++){
+		for(String elem : produc){
+			matrixC = new SimpleList<>(grammar);
+			follows = new SimpleList<String>();
+			System.out.println(elem);
 			
-			//find follows by implies of one production
-			while(matrixC.getData() != null){
-				
-				SimpleList<String> implies = (SimpleList<String>) matrixC.getData()[1];
-				String imp = implies.getData();
+			//find follows by implies of one production			
+			while(matrixC.length() != 0){
+				implies = new SimpleList<String>((SimpleList<String>) matrixC.getData()[1]);
+				//System.out.println(implies.length());
 				
 				//find follows by production
-				while(((SimpleList<Object[]>) matrixC.getData()[1]).getData() != null){
+				while(implies.length() != 0){
+					String imp = implies.getData();
 					StringBuilder sb = new StringBuilder(imp);
 					
 					//If production not found
-					if(sb.indexOf(produc[o]) == -1){ 
-						((SimpleList<Object[]>) matrixC.getData()[1]).delete(); //deletes a node
-					
-					}else{
+					if(sb.indexOf(elem) != -1){
+						System.out.println(sb.indexOf(elem));
+						
 						//Next is null
-						if((sb.indexOf((String) matrixC.getData()[1])+1) >= sb.length()){ 
+						if((sb.indexOf(elem)+1) >= sb.length()){ 
 							//Do not repeat follows
 							if(!follows.exists(Character.toString('$'))){
 								follows.append(Character.toString('$'));
 							}
 						}else{
-							//if next is string
-							if(sb.indexOf((String) matrixC.getData()[1]) == '('){
+							
+							//if next is a "string"							
+							if(sb.charAt(sb.indexOf(elem)+1) == '('){								
 								int u = (sb.indexOf(")")); String t;
 								
 								if((sb.indexOf(")")+1) == ('+' | '?' | '*')){
@@ -171,43 +175,72 @@ public class PredictiveNonRecursive {
 								}
 								follows.append(t);
 							}else{
+								
 								//If found, gets follower 
-								char v = sb.charAt(sb.indexOf((String) matrixC.getData()[0]) + 1);
+								char v = sb.charAt(sb.indexOf(elem) + 1);
+								//System.out.println(v);
 								follows.append(Character.toString(v)); 
 							}
-							
 						}
 					}
-				}
+					
+					implies.delete();
+				}//end inner while
+				
 				matrixC.delete();
-			}
+			}//end outer while
+
 			//Sets new follows matrix.
 			Object[] arr = new Object[2];
-			arr[0] = produc[o];
-			follows = replaceFirstOf(follows);
+			arr[0] = elem;
+			if(follows.length() == 0){
+				follows.append(Character.toString('$'));
+			}else{
+				follows = replaceFirstOf(follows);
+			}
 			arr[1] = follows;
-			follows.clear();
 			followsMatrix.append(arr);
 		}
+		System.out.print("DONE");
 	}
 	
 	private SimpleList<String> replaceFirstOf(SimpleList<String> follows){
 		//Doing follows list
-				SimpleList<String> tmp = new SimpleList<String>();
-				while(follows.getData() != null){
-					
-					String first = follows.getData();			
-					if(!Character.isUpperCase(first.charAt(0))){
-						tmp.append(first);
-					}else{
-						String[] str = getFirstOf(first);
-						for(int u = 0; u < str.length; u++){
-							tmp.append(str[u]);
-						}
-					}			
-				}
-				follows = tmp; //Replace Upper with firstOf.
-				return follows;
+		SimpleList<String> tmp = new SimpleList<String>();
+		while(follows.getData() != null){
+			
+			String first = follows.getData();			
+			if(!Character.isUpperCase(first.charAt(0))){
+				tmp.append(first);
+			}else{
+				/*String[] str = getFirstOf(first);
+				for(int u = 0; u < str.length; u++){
+					tmp.append(str[u]);
+				}*/
+			}			
+		}
+		return tmp;
+	}
+	
+	@SuppressWarnings("unchecked")
+    public void describe(SimpleList < Object[] > matrix) {
+
+		System.out.println( "LONGITUD:" );
+		System.out.println( matrix.length() );
+		System.out.println();
+	
+		while ( matrix.length() != 0 ) {
+		    System.out.println( "PRODUCCION:" );
+		    System.out.println( matrix.getData()[0] );
+		    // System.out.println();
+	
+		    System.out.println( "FOLLOWS:" );
+		    System.out
+			    .println( ( ( SimpleList < String > ) matrix.getData()[1] )
+				    .describe() );
+	
+		    matrix.delete();
+		}
 	}
 
 }
