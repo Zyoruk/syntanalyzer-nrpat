@@ -52,6 +52,7 @@ public class Tests {
 		}
 	}
 
+	//@Test
     public void test2() {
 
 	final ODTexport exporter = new ODTexport();
@@ -83,7 +84,7 @@ public class Tests {
 	System.out.println( t4 );
     }
 
-    @Test
+    //@Test
     public void test6() throws IOException {
 
 	final FilesManager file = new FilesManager();

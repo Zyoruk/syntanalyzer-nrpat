@@ -232,32 +232,37 @@ public class PredictiveNonRecursive {
 		for(String elem : produc){
 			matrixC = new SimpleList<>(grammar);
 			follows = new SimpleList<String>();
-			System.out.println(elem);
+			System.out.println("Starting with: " + elem);
+			
 			
 			//find follows by implies of one production			
 			while(matrixC.length() != 0){
 				implies = new SimpleList<String>((SimpleList<String>) matrixC.getData()[1]);
-				//System.out.println(implies.length());
+				if(elem.equals("B")){
+					System.out.println("Eval for implies root: " + implies.getData());
+				}
 				
 				//find follows by production
 				while(implies.length() != 0){
 					String imp = implies.getData();
 					StringBuilder sb = new StringBuilder(imp);
 					
-					//If production not found
+					//If production found
 					if(sb.indexOf(elem) != -1){
-						System.out.println(sb.indexOf(elem));
+						System.out.println("Element found: " + elem);
 						
 						//Next is null
 						if((sb.indexOf(elem)+1) >= sb.length()){ 
+							System.out.println("Next element of: " + elem + " is null.");
 							//Do not repeat follows
 							if(!follows.exists(Character.toString('$'))){
 								follows.append(Character.toString('$'));
 							}
 						}else{
-							
+							System.out.println("Next element of: " + elem + " is not null.");
 							//if next is a "string"							
-							if(sb.charAt(sb.indexOf(elem)+1) == '('){								
+							if(sb.charAt(sb.indexOf(elem)+1) == '('){	
+								System.out.println("Next element of: " + elem + " is a string.");
 								int u = (sb.indexOf(")")); String t;
 								
 								if((sb.indexOf(")")+1) == ('+' | '?' | '*')){
@@ -267,21 +272,21 @@ public class PredictiveNonRecursive {
 								}
 								follows.append(t);
 							}else{
+								System.out.print("Next element of: " + elem + " is an element.");
 								
 								//If found, gets follower 
 								char v = sb.charAt(sb.indexOf(elem) + 1);
-								//System.out.println(v);
+								System.out.println(" Which is: " + v + ".");
 								follows.append(Character.toString(v)); 
 							}
 						}
 					}
-					
 					implies.delete();
 				}//end inner while
 				
 				matrixC.delete();
 			}//end outer while
-
+			
 			//Sets new follows matrix.
 			Object[] arr = new Object[2];
 			arr[0] = elem;
@@ -292,8 +297,9 @@ public class PredictiveNonRecursive {
 			}
 			arr[1] = follows;
 			followsMatrix.append(arr);
+			System.out.println( "Ending with: " + elem);
 		}
-		System.out.print("DONE");
+		System.out.println();		
 	}
 	
 	private SimpleList<String> replaceFirstOf(SimpleList<String> follows){
@@ -305,11 +311,13 @@ public class PredictiveNonRecursive {
 			if(!Character.isUpperCase(first.charAt(0))){
 				tmp.append(first);
 			}else{
-				/*String[] str = getFirstOf(first);
+				String[] str = getFirstOf(first);
 				for(int u = 0; u < str.length; u++){
 					tmp.append(str[u]);
-				}*/
-			}			
+				}
+			}
+			
+			follows.delete();
 		}
 		return tmp;
 	}
