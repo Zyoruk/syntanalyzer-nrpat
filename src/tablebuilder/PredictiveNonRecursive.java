@@ -12,13 +12,14 @@ import Datastructs.SimpleList.SimpleList;
 public class PredictiveNonRecursive {
 
     Object[][]	      steps;
-    String[]		columns;
-    String[]		rows;
     Object[][]	      firstsArr;
     Object[][]	      data;
+    String[]		columns;
+    String[]		rows;
+
     SimpleList < Object[] > grammar;
     SimpleList < Object[] > followsMatrix;
-    TableModel	      tb = new DefaultTableModel();
+    TableModel	      tb;
 
     private void calcFirsts() {
 
@@ -40,16 +41,40 @@ public class PredictiveNonRecursive {
 
     public TableModel createTable(SimpleList < Object[] > pGrammar) {
 
+	tb = new DefaultTableModel();
 	grammar = pGrammar;
-	getRows();
 	calcFirsts();
-
-	columns = new String[pGrammar.length()];
-	final TableModel table = new DefaultTableModel( firstsArr , rows );
+	getRows();
+	getColumns();
+	final TableModel table = new DefaultTableModel( firstsArr , columns );
 	grammar = pGrammar;
 	followsMatrix = new SimpleList < Object[] >();
 	return table;
 
+    }
+
+    private String[] getColumns() {
+
+	final SimpleList < String > columnsT = new SimpleList < String >();
+
+	for ( int i = 0; i < firstsArr.length; i++ ) {
+	    for ( int j = 0; j < firstsArr[i].length; j++ ) {
+
+		if ( !columnsT.exists( ( String ) firstsArr[i][j] ) ) {
+		    columnsT.append( ( String ) firstsArr[i][j] );
+		}
+	    }
+	}
+	columns = new String[columnsT.length() + 1];
+	int k = 1;
+	while ( columnsT.getData() != null ) {
+	    columns[k] = columnsT.getData();
+	    columnsT.delete();
+	    k++;
+	}
+	columns[0] = "Table";
+	// columns[columns.length - 1] = "$";
+	return columns;
     }
 
     @SuppressWarnings("unchecked")
@@ -74,7 +99,6 @@ public class PredictiveNonRecursive {
 		final Object[] prodStr = getFirstOf( Character
 			.toString( rightSideOfProd.getData().charAt( 0 ) ) );
 		for ( final Object element : prodStr ) {
-		    System.out.println( element );
 		    if ( element != null ) {
 			temp3.append( element.toString() );
 		    }
@@ -86,9 +110,9 @@ public class PredictiveNonRecursive {
 			| Character.toString(
 				rightSideOfProdTemp.getData().charAt( 1 ) )
 				.equals( "?" )
-			| Character.toString(
-				rightSideOfProdTemp.getData().charAt( 1 ) )
-				.equals( "*" ) ) {
+				| Character.toString(
+					rightSideOfProdTemp.getData().charAt( 1 ) )
+					.equals( "*" ) ) {
 		    stB.append( rightSideOfProdTemp.getData().charAt( 0 ) );
 		    stB.append( rightSideOfProdTemp.getData().charAt( 1 ) );
 		    temp3.append( stB.toString() );
@@ -106,9 +130,9 @@ public class PredictiveNonRecursive {
 			    | Character.toString(
 				    rightSideOfProdTemp.getData().charAt(
 					    RBRACK + 1 ) ).equals( "?" )
-			    | Character.toString(
-				    rightSideOfProdTemp.getData().charAt(
-					    RBRACK + 1 ) ).equals( "*" ) ) {
+					    | Character.toString(
+						    rightSideOfProdTemp.getData().charAt(
+							    RBRACK + 1 ) ).equals( "*" ) ) {
 			stB.append( rightSideOfProdTemp.getData().charAt(
 				RBRACK + 1 ) );
 			temp3.append( stB.toString() );
@@ -203,7 +227,7 @@ public class PredictiveNonRecursive {
 		    // If production not found
 		    if ( sb.indexOf( element ) == -1 ) {
 			( ( SimpleList < Object[] > ) matrixC.getData()[1] )
-			.delete(); // deletes a node
+				.delete(); // deletes a node
 
 		    } else {
 			// Next is null
@@ -278,4 +302,10 @@ public class PredictiveNonRecursive {
 	return follows;
     }
 
+    private buildTable() {
+
+	// recorrer la lista de primeros
+	// recorrer la lista de siguiente
+
+    }
 }

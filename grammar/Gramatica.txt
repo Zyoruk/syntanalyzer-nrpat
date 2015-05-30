@@ -1,4 +1,4 @@
-A-> BCD
 B -> a+ | b? | (cb)*
+A-> BCD
 C-> ñ | 1234
 D -> ID
