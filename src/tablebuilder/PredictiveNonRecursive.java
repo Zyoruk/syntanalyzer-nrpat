@@ -11,17 +11,57 @@ import Datastructs.SimpleList.SimpleList;
 /** @author zyoruk , jeukel */
 public class PredictiveNonRecursive {
 
+<<<<<<< HEAD
 	Object[][]	      steps;
 	Object[][]	      firstsArr;
 	Object[][]	      data;
 	String[]		terminals;
 	String[]		rows;
+=======
+    Object[][]	      steps;
+    Object[][]	      firstsArr;
+    Object[][]	      data;
+    String[]		columns;
+    String[]		rows;
+
+    SimpleList < Object[] > grammar;
+    SimpleList < Object[] > followsMatrix;
+    TableModel	      tb;
+    String[] produc;
+
+    private void calcFirsts() {
+
+	final SimpleList < Object[] > temp = new SimpleList <>( grammar );
+	final SimpleList < Object[] > firsts = new SimpleList < Object[] >();
+	for ( int i = 0; i < grammar.length(); i++ ) {
+	    firsts.append( getFirstOf( temp.getData()[0].toString() ) );
+	    temp.delete();
+	}
+	firstsArr = new Object[firsts.length()][1];
+	int i = 0;
+	while ( firsts.getData() != null ) {
+	    firstsArr[i] = firsts.getData();
+	    firsts.delete();
+	    i++;
+	}
+>>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 
 	SimpleList < Object[] > grammar;
 	SimpleList < Object[] > followsMatrix;
 	TableModel	      tb;
 
+<<<<<<< HEAD
 	private void calcFirsts() {
+=======
+    public TableModel createTable(SimpleList < Object[] > pGrammar) {
+    grammar = pGrammar;
+    followsMatrix = new SimpleList<Object[]>();
+	//getRows();
+	//calcFirsts();
+    produc = new String[grammar.length()];
+	getFollows();
+	describe(this.followsMatrix);
+>>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 
 		final SimpleList < Object[] > temp = new SimpleList <>( grammar );
 		final SimpleList < Object[] > firsts = new SimpleList < Object[] >();
@@ -222,8 +262,12 @@ public class PredictiveNonRecursive {
 		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);;
 		SimpleList<String> follows;
 		SimpleList<String> implies;
+<<<<<<< HEAD
 		String[] produc = new String[grammar.length()];
 
+=======
+		
+>>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 		int i = 0;
 		while(matrixC.getData() != null){
 			produc[i] = (String) matrixC.getData()[0];
@@ -242,7 +286,11 @@ public class PredictiveNonRecursive {
 			while(matrixC.length() != 0){
 				implies = new SimpleList<String>((SimpleList<String>) matrixC.getData()[1]);
 				if(elem.equals("B")){
+<<<<<<< HEAD
 //					System.out.println("Eval for implies root: " + implies.getData());
+=======
+					System.out.println("Eval for implies's root is: " + implies.getData());
+>>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 				}
 
 				//find follows by production
@@ -289,7 +337,13 @@ public class PredictiveNonRecursive {
 
 				matrixC.delete();
 			}//end outer while
+<<<<<<< HEAD
 
+=======
+			
+			
+			
+>>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 			//Sets new follows matrix.
 			Object[] arr = new Object[2];
 			arr[0] = elem;
@@ -311,13 +365,25 @@ public class PredictiveNonRecursive {
 		while(follows.getData() != null){
 
 			String first = follows.getData();			
-			if(!Character.isUpperCase(first.charAt(0))){
+			if(!Character.isUpperCase(first.charAt(0))){				
 				tmp.append(first);
 			}else{
 				String[] str = getFirstOf(first);
+				
 				for(int u = 0; u < str.length; u++){
-					tmp.append(str[u]);
-				}
+					if(str[u].charAt(0) == '�'){
+						String[] sr = getFollowOf(first);
+						
+						for(int f = 0; f < sr.length; f++){
+							String[] stg = getFirstOf(sr[f]);
+							for(int g = 0; g < stg.length; g++){
+								tmp.append(stg[g]);
+							}						
+						}
+					}else{
+						tmp.append(str[u]);
+					}
+				}			
 			}
 
 			follows.delete();
@@ -326,7 +392,80 @@ public class PredictiveNonRecursive {
 	}
 
 	@SuppressWarnings("unchecked")
+<<<<<<< HEAD
 	public void describe(SimpleList < Object[] > matrix) {
+=======
+	private String[] getFollowOf (String elem){
+		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);
+		SimpleList<String> follows = new SimpleList<String>();
+		SimpleList<String> implies;
+		//System.out.println("Starting with: " + elem);
+		
+		
+		//find follows by implies of one production			
+		while(matrixC.length() != 0){
+			implies = new SimpleList<String>((SimpleList<String>) matrixC.getData()[1]);
+			if(elem.equals("B")){
+				//System.out.println("Eval for implies's root is: " + implies.getData());
+			}
+			
+			//find follows by production
+			while(implies.length() != 0){
+				String imp = implies.getData();
+				StringBuilder sb = new StringBuilder(imp);
+				
+				//If production found
+				if(sb.indexOf(elem) != -1){
+					System.out.println("Element found: " + elem);
+					
+					//Next is null
+					if((sb.indexOf(elem)+1) >= sb.length()){ 
+						System.out.println("Next element of: " + elem + " is null.");
+						//Do not repeat follows
+						if(!follows.exists(Character.toString('$'))){
+							follows.append(Character.toString('$'));
+						}
+					}else{
+						System.out.println("Next element of: " + elem + " is not null.");
+						//if next is a "string"							
+						if(sb.charAt(sb.indexOf(elem)+1) == '('){	
+							System.out.println("Next element of: " + elem + " is a string.");
+							int u = (sb.indexOf(")")); String t;
+							
+							if((sb.indexOf(")")+1) == ('+' | '?' | '*')){
+								t = sb.substring( 0 , u+1 );
+							}else{
+								t = sb.substring( 0 , u );
+							}
+							follows.append(t);
+						}else{
+							System.out.print("Next element of: " + elem + " is an element.");
+							
+							//If found, gets follower 
+							char v = sb.charAt(sb.indexOf(elem) + 1);
+							System.out.println(" Which is: " + v + ".");
+							follows.append(Character.toString(v)); 
+						}
+					}
+				}
+				implies.delete();
+			}//end inner while
+			
+			matrixC.delete();
+		}//end outer while
+		
+		String[] ret = new String[follows.length()];
+		for(int f = 0; f < follows.length(); f++){
+			ret[f] = follows.getData();
+			follows.delete();
+		}	
+		
+		return ret;		
+	}
+	
+	@SuppressWarnings("unchecked")
+    public void describe(SimpleList < Object[] > matrix) {
+>>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 
 		System.out.println( "LONGITUD:" );
 		System.out.println( matrix.length() );
