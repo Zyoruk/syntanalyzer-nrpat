@@ -2,19 +2,23 @@ package tests;
 
 import grammarCheck.GrammarChecker;
 import grammarCheck.GrammarChecker.lexerror;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
 import odtexporter.ODTexport;
 import grammarCheck.GrammarChecker;
-import grammarCheck.GrammarChecker.lexerror;
 import tablebuilder.FilesManager;
 import tablebuilder.PredictiveNonRecursive;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
 import org.junit.Test;
+
 import Datastructs.SimpleList.SimpleList;
 
 public class Tests {
@@ -27,7 +31,7 @@ public class Tests {
 		file.describe(matrix);
 	}
 	
-	@Test
+	//@Test
 	public void test5() throws IOException{
 		FilesManager file = new FilesManager();
 		SimpleList<Object[]> matrix = new SimpleList<Object[]>();
@@ -47,7 +51,6 @@ public class Tests {
 			 r =new InputStreamReader(new FileInputStream(thePath), "Cp1252");
 			 new GrammarChecker(new BufferedReader(r));
 		} catch (IOException | lexerror e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -84,7 +87,7 @@ public class Tests {
 	System.out.println( t4 );
     }
 
-    //@Test
+    @Test
     public void test6() throws IOException {
 
 	final FilesManager file = new FilesManager();
