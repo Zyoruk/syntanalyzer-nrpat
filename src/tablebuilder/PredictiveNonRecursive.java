@@ -35,6 +35,9 @@ public class PredictiveNonRecursive {
 			step.append(prod + " :{");
 			for (int j = 0 ; j < f.length;j++){
 				step.append(f[j]);
+				if(j+1 < f.length){
+					step.append(", ");	
+				}
 			}
 			step.append("}");
 			stepsList.append(step.toString());
@@ -336,6 +339,9 @@ public class PredictiveNonRecursive {
 			step.append(" :{");
 			for(int h = 0;h < follows.length();h++){
 				step.append(follows.getElementAt(h));
+				if(h+1 < follows.length()){
+					step.append(", ");	
+				}
 			}
 			step.append("}");
 			stepsList.append(step.toString());
