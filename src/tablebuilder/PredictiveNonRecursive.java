@@ -11,58 +11,19 @@ import Datastructs.SimpleList.SimpleList;
 /** @author zyoruk , jeukel */
 public class PredictiveNonRecursive {
 
-<<<<<<< HEAD
 	Object[][]	      steps;
 	Object[][]	      firstsArr;
 	Object[][]	      data;
 	String[]		terminals;
 	String[]		rows;
-=======
-    Object[][]	      steps;
-    Object[][]	      firstsArr;
-    Object[][]	      data;
-    String[]		columns;
-    String[]		rows;
 
+	SimpleList<String> stepsList; 
     SimpleList < Object[] > grammar;
     SimpleList < Object[] > followsMatrix;
     TableModel	      tb;
     String[] produc;
-
-    private void calcFirsts() {
-
-	final SimpleList < Object[] > temp = new SimpleList <>( grammar );
-	final SimpleList < Object[] > firsts = new SimpleList < Object[] >();
-	for ( int i = 0; i < grammar.length(); i++ ) {
-	    firsts.append( getFirstOf( temp.getData()[0].toString() ) );
-	    temp.delete();
-	}
-	firstsArr = new Object[firsts.length()][1];
-	int i = 0;
-	while ( firsts.getData() != null ) {
-	    firstsArr[i] = firsts.getData();
-	    firsts.delete();
-	    i++;
-	}
->>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
-
-	SimpleList < Object[] > grammar;
-	SimpleList < Object[] > followsMatrix;
-	TableModel	      tb;
-
-<<<<<<< HEAD
+    
 	private void calcFirsts() {
-=======
-    public TableModel createTable(SimpleList < Object[] > pGrammar) {
-    grammar = pGrammar;
-    followsMatrix = new SimpleList<Object[]>();
-	//getRows();
-	//calcFirsts();
-    produc = new String[grammar.length()];
-	getFollows();
-	describe(this.followsMatrix);
->>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
-
 		final SimpleList < Object[] > temp = new SimpleList <>( grammar );
 		final SimpleList < Object[] > firsts = new SimpleList < Object[] >();
 		for ( int i = 0; i < grammar.length(); i++ ) {
@@ -81,17 +42,18 @@ public class PredictiveNonRecursive {
 
 	public TableModel createTable(SimpleList < Object[] > pGrammar) {
 		grammar = pGrammar;
-		followsMatrix = new SimpleList<Object[]>();
 		calcFirsts();
 		getFollows();
 		getRows();
 		getTerminals();
+//		describe(this.followsMatrix);
 		buildData();
 		final TableModel table = new DefaultTableModel( data , terminals );
 		return table;
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private String[] getTerminals() {
 
 		final SimpleList < String > columnsT = new SimpleList < String >();
@@ -100,16 +62,21 @@ public class PredictiveNonRecursive {
 			for ( int j = 0; j < firstsArr[i].length; j++ ) {
 
 				if ( !columnsT.exists( ( String ) firstsArr[i][j] ) ) {
-					columnsT.append( ( String ) firstsArr[i][j] );
+					if((( String ) firstsArr[i][j]).equals("ñ")){
+						firstsArr[i][j]="ñ";
+						columnsT.append( "ñ" );	
+					}else{
+						columnsT.append( ( String ) firstsArr[i][j] );	
+					}
 				}
 			}
 		}
 
 		//Recorrer la matriz de siguientes.TODO
-		SimpleList < Object[] > temp = new SimpleList<> (this.followsMatrix);
+		SimpleList < Object[] > temp = new SimpleList<> (followsMatrix);
+		SimpleList<String> temp2 ;
 		while(temp.getData()!=null){
-			@SuppressWarnings("unchecked")
-			SimpleList<String> temp2 = (SimpleList<String>) temp.getData()[1];
+			temp2= new SimpleList<>((SimpleList<String>) temp.getData()[1]);
 			//Recorrer la lista 
 			while(temp2.getData()!=null){
 				if(!columnsT.exists(temp2.getData())){
@@ -134,9 +101,9 @@ public class PredictiveNonRecursive {
 	@SuppressWarnings("unchecked")
 	private String[] getFirstOf(String pProd) {
 
-		final SimpleList < Object[] > tempGrammar = new SimpleList <>( grammar );
+		SimpleList < Object[] > tempGrammar = new SimpleList <>( grammar );
 		SimpleList < String > rightSideOfProd = null;
-		for ( int i = 0; i <= grammar.length(); i++ ) {
+		for ( int i = 0; i < grammar.length(); i++ ) {
 			if ( tempGrammar.getData()[0].toString().equals( pProd ) ) {
 				rightSideOfProd = ( SimpleList < String > ) tempGrammar
 						.getData()[1];
@@ -209,8 +176,8 @@ public class PredictiveNonRecursive {
 					temp3.append( stB.toString() );
 				} else if ( Character.toString(
 						rightSideOfProdTemp.getData().charAt( 0 ) )
-						.equals( "ñ" ) ) {
-					stB.append( rightSideOfProdTemp.getData().charAt( 0 ) );
+						.equals( "�" ) ) {
+					stB.append( 'ñ' );
 					temp3.append( stB.toString() );
 
 				} else if ( rightSideOfProdTemp.getData().substring( 0 , 2 )
@@ -229,8 +196,6 @@ public class PredictiveNonRecursive {
 
 			rightSideOfProdTemp.delete();
 		}
-		// }<>
-		// System.out.println( temp3.describe() );
 		return getFirstsAux( temp3 );
 	}
 
@@ -249,7 +214,7 @@ public class PredictiveNonRecursive {
 
 	private String[] getRows() {
 
-		final SimpleList < Object[] > temp = grammar;
+		final SimpleList < Object[] > temp = new SimpleList<>(grammar);
 		rows = new String[grammar.length()];
 		for ( int i = 0; i < grammar.length(); i++ ) {
 			rows[i] = temp.getElementAt( i )[0].toString();
@@ -259,15 +224,13 @@ public class PredictiveNonRecursive {
 
 	@SuppressWarnings("unchecked")
 	public void getFollows(){
-		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);;
+		followsMatrix = new SimpleList<Object[]>();
+		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);
 		SimpleList<String> follows;
 		SimpleList<String> implies;
-<<<<<<< HEAD
-		String[] produc = new String[grammar.length()];
+		produc = new String[grammar.length()];
 
-=======
-		
->>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
+
 		int i = 0;
 		while(matrixC.getData() != null){
 			produc[i] = (String) matrixC.getData()[0];
@@ -285,13 +248,6 @@ public class PredictiveNonRecursive {
 			//find follows by implies of one production			
 			while(matrixC.length() != 0){
 				implies = new SimpleList<String>((SimpleList<String>) matrixC.getData()[1]);
-				if(elem.equals("B")){
-<<<<<<< HEAD
-//					System.out.println("Eval for implies root: " + implies.getData());
-=======
-					System.out.println("Eval for implies's root is: " + implies.getData());
->>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
-				}
 
 				//find follows by production
 				while(implies.length() != 0){
@@ -337,13 +293,7 @@ public class PredictiveNonRecursive {
 
 				matrixC.delete();
 			}//end outer while
-<<<<<<< HEAD
 
-=======
-			
-			
-			
->>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 			//Sets new follows matrix.
 			Object[] arr = new Object[2];
 			arr[0] = elem;
@@ -392,9 +342,6 @@ public class PredictiveNonRecursive {
 	}
 
 	@SuppressWarnings("unchecked")
-<<<<<<< HEAD
-	public void describe(SimpleList < Object[] > matrix) {
-=======
 	private String[] getFollowOf (String elem){
 		SimpleList<Object[]> matrixC = new SimpleList<>(grammar);
 		SimpleList<String> follows = new SimpleList<String>();
@@ -416,20 +363,20 @@ public class PredictiveNonRecursive {
 				
 				//If production found
 				if(sb.indexOf(elem) != -1){
-					System.out.println("Element found: " + elem);
+//					System.out.println("Element found: " + elem);
 					
 					//Next is null
 					if((sb.indexOf(elem)+1) >= sb.length()){ 
-						System.out.println("Next element of: " + elem + " is null.");
+//						System.out.println("Next element of: " + elem + " is null.");
 						//Do not repeat follows
 						if(!follows.exists(Character.toString('$'))){
 							follows.append(Character.toString('$'));
 						}
 					}else{
-						System.out.println("Next element of: " + elem + " is not null.");
+//						System.out.println("Next element of: " + elem + " is not null.");
 						//if next is a "string"							
 						if(sb.charAt(sb.indexOf(elem)+1) == '('){	
-							System.out.println("Next element of: " + elem + " is a string.");
+//							System.out.println("Next element of: " + elem + " is a string.");
 							int u = (sb.indexOf(")")); String t;
 							
 							if((sb.indexOf(")")+1) == ('+' | '?' | '*')){
@@ -439,11 +386,11 @@ public class PredictiveNonRecursive {
 							}
 							follows.append(t);
 						}else{
-							System.out.print("Next element of: " + elem + " is an element.");
+//							System.out.print("Next element of: " + elem + " is an element.");
 							
 							//If found, gets follower 
 							char v = sb.charAt(sb.indexOf(elem) + 1);
-							System.out.println(" Which is: " + v + ".");
+//							System.out.println(" Which is: " + v + ".");
 							follows.append(Character.toString(v)); 
 						}
 					}
@@ -465,7 +412,6 @@ public class PredictiveNonRecursive {
 	
 	@SuppressWarnings("unchecked")
     public void describe(SimpleList < Object[] > matrix) {
->>>>>>> e6ea1233d7a1149c5280a002bc1f9cdc377d6410
 
 		System.out.println( "LONGITUD:" );
 		System.out.println( matrix.length() );
@@ -486,7 +432,7 @@ public class PredictiveNonRecursive {
 	}
 
 	private void buildData() {
-		this.data = new Object[this.terminals.length][this.firstsArr.length];
+		this.data = new Object[this.firstsArr.length][this.terminals.length];
 		SimpleList < Object[] > grammarT = new SimpleList<> (this.grammar);
 		// recorrer la lista de primeros
 		for (int i = 0; i < this.firstsArr.length; i ++){
@@ -497,9 +443,15 @@ public class PredictiveNonRecursive {
 				int K= getTerminalIndex((String)firsts[j]);
 				String prod =tempProd.getData();
 				if(K!=-1){
-					System.out.println(K);
 					//TODO hay que ir agregando las implicaciones.
-					this.data[i][K] = prod;
+					if(prod !=null && Character.isUpperCase(prod.charAt(0))){
+						String[] tempProds = this.getFirstOf(Character.toString(prod.charAt(0)));
+						for(int t = 0;t<tempProds.length;t++){
+							this.data[i][t+1] = tempProds[t];
+						}
+					}else if(prod!=null){
+						this.data[i][K] = prod;	
+					}
 				}
 				if(tempProd.getData()==null){
 					break;
@@ -508,23 +460,55 @@ public class PredictiveNonRecursive {
 			}
 			grammarT.delete();
 		}
+		
 		// recorrer la lista de siguientes
 		SimpleList < Object[] > temp = new SimpleList<> (this.followsMatrix);
+//		this.describe(temp);
 		int i = 0;
 		while(temp.getData()!=null){
-			@SuppressWarnings("unchecked")
 			SimpleList<String> temp2 = (SimpleList<String>) temp.getData()[1];
 			while(temp2.getData()!=null){
 				int K= getTerminalIndex(temp2.getData());
 				if(K!=-1){
 					//TODO hay que ir agregando las implicaciones.
-					this.data[i][K] = "X";
+					this.data[i][K] = temp2.getData();
 				}
 				temp2.delete();
 			}
 			i++;
 			temp.delete();
 		}
+		
+		//solo para una K
+		int t=0;
+		for (t= 0;t< terminals.length;t++){
+			if(this.terminals[t].equals("�")){
+				break;
+			}
+		}
+		//Eliminar terminal
+		for (int a = t;a < terminals.length;a++){
+			if(a+1 < terminals.length){
+				terminals[a]=terminals[a+1];
+			}else{
+				terminals[a] = " ";
+			}				
+		}	
+		//Eliminar dentro de data
+		for(int b = 0;b< data.length;b++){
+			for (int a = t;a < data[0].length;a++){
+				if(a+1 < data[0].length){
+					data[b][a]=data[b][a+1];
+				}else{
+					data[b][a] = " ";
+				}				
+			}			
+		}
+		
+		for (int k= 0; k < this.produc.length;k++){
+			this.data[k][0] = this.produc[k];
+		}
+		
 	}
 	private int getTerminalIndex(String pTerminal){
 		for(int i = 0; i < this.terminals.length;i++){
