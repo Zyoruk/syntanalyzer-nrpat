@@ -5,10 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.table.TableModel;
-
-import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
-import org.jopendocument.model.OpenDocument;
 
 import constants.Constants;
 

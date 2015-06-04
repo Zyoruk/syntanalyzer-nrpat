@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import odtexporter.ODTexport;
-import grammarCheck.GrammarChecker;
 import tablebuilder.FilesManager;
 import tablebuilder.PredictiveNonRecursive;
 

@@ -466,13 +466,13 @@ public class PredictiveNonRecursive {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void buildData() {
 		this.data = new Object[this.firstsArr.length][this.terminals.length];
 		SimpleList < Object[] > grammarT = new SimpleList<> (this.grammar);
 		// recorrer la lista de primeros
 		for (int i = 0; i < this.firstsArr.length; i ++){
 			Object[] firsts = this.firstsArr[i];
-			@SuppressWarnings("unchecked")
 			SimpleList<String> tempProd = (SimpleList<String>) grammarT.getData()[1];
 			for (int j= 0; j < this.firstsArr[i].length; j++){
 				int K= getTerminalIndex((String)firsts[j]);
