@@ -3,6 +3,8 @@
  */
 package tablebuilder;
 
+import java.util.Stack;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -551,12 +553,79 @@ public class PredictiveNonRecursive {
 		}
 		
 	}
+	
 	private int getTerminalIndex(String pTerminal){
 		for(int i = 0; i < this.terminals.length;i++){
 			if(pTerminal.equals(this.terminals[i])){
 				return i;
 			}
+//			else if(this.terminals[i].charAt(0) != '('){
+//				if(pTerminal.equals(Character.toString(this.terminals[i].charAt(0)))){
+//					return i;			
+//				}
+//			}
+//				else{
+//				String temp = this.terminals[i].substring(1, this.terminals[i].indexOf(')'));
+//				if(pTerminal.equals(temp)){
+//					return i;			
+//				}
+//			}
 		}
+//		System.out.println(pTerminal);
 		return -1;
+	}
+	
+	public boolean evalString(String toEval){
+		Stack<String> theStack= new Stack<String>();
+		theStack.push("$");
+	
+		//tenemos entonces una pila con $ y un string que termina en $
+		//El string que entra hay que "tokenizarlo"
+		String tokenizedString = tokenize(toEval,"");
+		
+		StringBuilder temp1 = new StringBuilder();
+		temp1.append(tokenizedString);
+		temp1.append("$");
+		String eval = temp1.toString();
+		System.out.println(tokenizedString);
+		return true;
+	}
+	StringBuilder tokenized ;
+	private String tokenize(String rawString,String s2){
+		if ( rawString == ""){
+			return "";
+		}else if(rawString.length() == 1){
+			return rawString;
+		}
+		tokenized = new StringBuilder();
+		
+		String s = rawString;
+		if(this.getTerminalIndex(s)== -1 && this.getTerminalIndex(s2)==-1){
+			if(s.length()> 1 && !s2.equals(s.substring(0, 1))){
+//				System.out.println("s " + s);
+//				System.out.println("s2 " + s2);
+				s2 = s2 + s.substring(0, 1);
+				s = s.substring(1);
+				tokenize(s2, "");
+				tokenize(s,s2);
+			}else if (s.length()>1){
+//				System.out.println("s " + s);
+//				System.out.println("s2 " + s2);
+				s2 = s.substring(0, 1)+"+";
+				s = s.substring(1);
+				tokenize(s2, "");
+				tokenize(s,s2);
+			}else if(s.length()==0){
+				tokenized.append("id");
+			}
+		}else if(this.getTerminalIndex(s)== -1 && this.getTerminalIndex(s2)!=-1){
+			tokenize(s2,"");
+//			tokenized.append("id");
+		}else if(this.getTerminalIndex(s)!= -1 && this.getTerminalIndex(s2)==-1){
+			tokenized.append(s);
+			tokenized.append("id");
+		}
+		//Recorrer el string en busca de terminales.
+		return tokenized.toString();
 	}
 }

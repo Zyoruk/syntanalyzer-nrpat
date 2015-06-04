@@ -1,5 +1,4 @@
-A-> BCDE
+A-> BCD
 B -> a+ | b? | (cb)*
 C-> ñ | 1234
 D -> ID
-E -> e? | f+

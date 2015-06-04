@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 
 import odtexporter.ODTexport;
 import tablebuilder.FilesManager;
@@ -43,11 +44,13 @@ public class Tests {
 	//@Test
 	public void test() {
 		//fail("Not yet implemented");
-		String thePath = "./grammar/Gramatica.txt";
+//		String thePath = "./grammar/Gramatica.txt";
+		String  thePath ="./evals/Evaluaciones.txt";
 		Reader r;
 		try {
 			//r = new FileReader(thePath);
-			 r =new InputStreamReader(new FileInputStream(thePath), "Cp1252");
+			r = new StringReader("hola1234");
+//			 r =new InputStreamReader(new FileInputStream(thePath), "Cp1252");
 			 new GrammarChecker(new BufferedReader(r));
 		} catch (IOException | lexerror e) {
 			e.printStackTrace();
@@ -87,7 +90,7 @@ public class Tests {
     }
 
     @Test
-    public void test6() throws IOException {
+    public void test6() throws IOException, lexerror {
 
 	final FilesManager file = new FilesManager();
 	final SimpleList < Object[] > matrix = new SimpleList < Object[] >();
@@ -98,5 +101,18 @@ public class Tests {
 	final TableModel model2 = pR.getStepTable();
 	final ODTexport export = new ODTexport();
 	export.createFiles( model , 1, model2 );
+	
+	//Vamos a evaluar Evaluaciones.txt
+	SimpleList<String> fileLines = new SimpleList<>(file.getFileLanes());
+	for ( int i = 0; i < fileLines.length();i++){
+		pR.evalString(fileLines.getElementAt(i));
+	}
+    }
+    
+    //@Test
+    public void test7(){
+    	String l = "L";
+    	System.out.println(l.substring(1));
+    	System.out.println(l.substring(0,1));
     }
 }

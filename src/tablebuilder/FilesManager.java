@@ -1,9 +1,14 @@
 package tablebuilder;
 
+import grammarCheck.GrammarChecker;
+import grammarCheck.GrammarChecker.lexerror;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 
 import Datastructs.SimpleList.SimpleList;
 
@@ -83,5 +88,22 @@ public class FilesManager {
 	    }
 	}
 	arch.close();
+    }
+    
+    public SimpleList<String> getFileLanes() throws IOException, lexerror{
+    	final File tmp = new File( "./evals/Evaluaciones.txt");
+    	SimpleList<String> toReturn = new SimpleList<String>();
+    	final BufferedReader arch = new BufferedReader( new FileReader( tmp ) );
+    	String line;
+
+    	while ( ( line = arch.readLine() ) != null ) {
+    		Reader r;
+    		//Verificar que no tenga caracteres invalidos.
+    		r = new StringReader(line);
+    		new GrammarChecker(new BufferedReader(r));
+    		toReturn.append(line);
+    	}
+    	arch.close();
+    	return toReturn;
     }
 }
