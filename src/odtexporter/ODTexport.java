@@ -8,6 +8,7 @@ import javax.swing.table.TableModel;
 
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
+import org.jopendocument.model.OpenDocument;
 
 import constants.Constants;
 
@@ -15,36 +16,31 @@ public class ODTexport {
 
     Constants K = new Constants();
 
-    public void createFiles(TableModel model, int tableOp) {
+    public void createFiles(TableModel model, int tableOp, TableModel model2) {
 
-	try {
-	    if ( tableOp == 1 ) {
-		final File file = new File( K._TABLE1 );
-		SpreadSheet.createEmpty( model ).saveAs( file );
+    	try {
+    		if ( tableOp == 1 ) {
+    			final File file = new File( K._TABLE1 );
+    			SpreadSheet ss1 = SpreadSheet.createEmpty(model);
+    			ss1.getFirstSheet().setName("Tabla");
+    			ss1.addSheet(1, "Pasos");
+    			ss1.getSheet(1).merge(model2, 1, 0);
+    			ss1.getSheet(1).setValueAt("Pasos", 0, 0);
+    			ss1.saveAs(file);
 
-		final Sheet sheet = SpreadSheet.createFromFile( file )
-			.getSheet( 0 );
-		final Sheet sheet2 = SpreadSheet.createFromFile( file )
-			.addSheet( "Hoja2" );
-		final File outputFile = new File( K._TABLE1 );
-		sheet.getSpreadSheet().saveAs( outputFile );
-		sheet2.getSpreadSheet().saveAs( outputFile );
+    		} else if ( tableOp == 2 ) {
 
-	    } else if ( tableOp == 2 ) {
-		final File file = new File( K._TABLE2 );
-		SpreadSheet.createEmpty( model ).saveAs( file );
+    			final File file = new File( K._TABLE2 );
+    			SpreadSheet ss1 = SpreadSheet.createEmpty(model);
+    			ss1.getFirstSheet().setName("Tabla");
+    			ss1.addSheet(1, "Pasos");
+    			ss1.getSheet(1).merge(model2, 1, 0);
+    			ss1.getSheet(1).setValueAt("Pasos", 0, 0);
+    			ss1.saveAs(file);
 
-		final Sheet sheet = SpreadSheet.createFromFile( file )
-			.getSheet( 0 );
-		final Sheet sheet2 = SpreadSheet.createFromFile( file )
-			.addSheet( "Hoja2" );
-		final File outputFile = new File( K._TABLE2 );
-		sheet.getSpreadSheet().saveAs( outputFile );
-		sheet2.getSpreadSheet().saveAs( outputFile );
-
-	    } else {
-		System.out.println( "err" );
-	    }
+    		} else {
+    			System.out.println( "err" );
+    		}
 
 	    // OOUtils.open(file); abre automaticamente el archivo recien
 	    // creado.

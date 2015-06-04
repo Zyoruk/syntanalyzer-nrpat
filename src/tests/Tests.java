@@ -69,7 +69,7 @@ public class Tests {
 
 	final String[] columns = new String[] { "Month", "Temp" };
 	final TableModel model = new DefaultTableModel( data , columns );
-	exporter.createFiles( model , 1 );
+	exporter.createFiles( model , 1, model );
     }
 
     // @Test
@@ -94,9 +94,10 @@ public class Tests {
 	final SimpleList < Object[] > matrix = new SimpleList < Object[] >();
 	file.FilesMan( matrix );
 	// file.describe( matrix );
-	final TableModel model = new PredictiveNonRecursive()
-		.createTable( matrix );
+	final PredictiveNonRecursive pR = new PredictiveNonRecursive();
+	final TableModel model = pR.createTable( matrix );
+	final TableModel model2 = pR.getStepTable();
 	final ODTexport export = new ODTexport();
-	export.createFiles( model , 1 );
+	export.createFiles( model , 1, model2 );
     }
 }

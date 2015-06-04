@@ -11,7 +11,7 @@ import Datastructs.SimpleList.SimpleList;
 /** @author zyoruk , jeukel */
 public class PredictiveNonRecursive {
 
-	Object[][]	      steps;
+	String[][]	      steps;
 	Object[][]	      firstsArr;
 	Object[][]	      data;
 	String[]		terminals;
@@ -27,9 +27,20 @@ public class PredictiveNonRecursive {
 		final SimpleList < Object[] > temp = new SimpleList <>( grammar );
 		final SimpleList < Object[] > firsts = new SimpleList < Object[] >();
 		for ( int i = 0; i < grammar.length(); i++ ) {
-			firsts.append( getFirstOf( temp.getData()[0].toString() ) );
+			String prod =temp.getData()[0].toString();
+			String[] f = getFirstOf( prod );
+			firsts.append( f );
+			StringBuilder step =new StringBuilder();
+			step.append("Calcular los primeros de ");
+			step.append(prod + " :{");
+			for (int j = 0 ; j < f.length;j++){
+				step.append(f[j]);
+			}
+			step.append("}");
+			stepsList.append(step.toString());
 			temp.delete();
 		}
+//		System.out.println(this.stepsList.describe());
 		firstsArr = new Object[firsts.length()][1];
 		int i = 0;
 		while ( firsts.getData() != null ) {
@@ -37,10 +48,10 @@ public class PredictiveNonRecursive {
 			firsts.delete();
 			i++;
 		}
-
 	}
 
 	public TableModel createTable(SimpleList < Object[] > pGrammar) {
+		stepsList= new SimpleList<String>();
 		grammar = pGrammar;
 		calcFirsts();
 		getFollows();
@@ -51,6 +62,19 @@ public class PredictiveNonRecursive {
 		final TableModel table = new DefaultTableModel( data , terminals );
 		return table;
 
+	}
+	public TableModel getStepTable(){
+		String[] sc = new String[1];
+		sc[0] = "PASOS";
+		final TableModel table = new DefaultTableModel( getSteps() , sc);
+		return table;
+	}
+	private String[][] getSteps(){
+		steps = new String[this.stepsList.length()][1];
+		for (int i = 0; i < this.stepsList.length();i++){
+			steps[i][0] = this.stepsList.getElementAt(i);
+		}
+		return steps;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -243,8 +267,7 @@ public class PredictiveNonRecursive {
 			matrixC = new SimpleList<>(grammar);
 			follows = new SimpleList<String>();
 //			System.out.println("Starting with: " + elem);
-
-
+			
 			//find follows by implies of one production			
 			while(matrixC.length() != 0){
 				implies = new SimpleList<String>((SimpleList<String>) matrixC.getData()[1]);
@@ -305,6 +328,18 @@ public class PredictiveNonRecursive {
 			arr[1] = follows;
 			followsMatrix.append(arr);
 //			System.out.println( "Ending with: " + elem);
+			
+			//Add to steps
+			StringBuilder step= new StringBuilder();
+			step.append("Siguientes de ");
+			step.append(elem);
+			step.append(" :{");
+			for(int h = 0;h < follows.length();h++){
+				step.append(follows.getElementAt(h));
+			}
+			step.append("}");
+			stepsList.append(step.toString());
+//			System.out.println(stepsList.describe());
 		}
 //		System.out.println();		
 	}
