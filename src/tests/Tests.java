@@ -71,7 +71,7 @@ public class Tests {
 
 	final String[] columns = new String[] { "Month", "Temp" };
 	final TableModel model = new DefaultTableModel( data , columns );
-	exporter.createFiles( model , 1, model );
+	//exporter.createFiles( model , 1, model );
     }
 
     // @Test
@@ -91,28 +91,25 @@ public class Tests {
 
     @Test
     public void test6() throws IOException, lexerror {
-
-	final FilesManager file = new FilesManager();
-	final SimpleList < Object[] > matrix = new SimpleList < Object[] >();
-	file.FilesMan( matrix );
-	// file.describe( matrix );
-	final PredictiveNonRecursive pR = new PredictiveNonRecursive();
-	final TableModel model = pR.createTable( matrix );
-	final TableModel model2 = pR.getStepTable();
-	final ODTexport export = new ODTexport();
-	export.createFiles( model , 1, model2 );
-	
-	//Vamos a evaluar Evaluaciones.txt
-	SimpleList<String> fileLines = new SimpleList<>(file.getFileLanes());
-	for ( int i = 0; i < fileLines.length();i++){
-		pR.evalString(fileLines.getElementAt(i));
-	}
+		final FilesManager file = new FilesManager();
+		final SimpleList < Object[] > matrix = new SimpleList < Object[] >();
+		file.FilesMan( matrix );
+		// file.describe( matrix );
+		final PredictiveNonRecursive pR = new PredictiveNonRecursive();
+		final TableModel model = pR.createTable( matrix );
+		final TableModel model2 = pR.getStepTable();
+		final ODTexport export = new ODTexport();
+		export.createFiles( model , 1, model2 );
+		
+		//Vamos a evaluar Evaluaciones.txt
+		SimpleList<String> fileLines = new SimpleList<>(file.getFileLanes());
+		pR.init();
+		
+		for ( int i = 0; i < fileLines.length();i++){
+			pR.evalString(fileLines.getElementAt(i));
+		}
+		
+		pR.isTextCorrect();
     }
     
-    //@Test
-    public void test7(){
-    	String l = "L";
-    	System.out.println(l.substring(1));
-    	System.out.println(l.substring(0,1));
-    }
 }

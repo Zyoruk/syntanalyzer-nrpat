@@ -24,6 +24,13 @@ public class PredictiveNonRecursive {
     SimpleList < Object[] > followsMatrix;
     TableModel	      tb;
     String[] produc;
+    SimpleList<String> newLines;
+    SimpleList<String> errors;
+
+    public void init(){
+    	newLines = new SimpleList<>();
+    	errors = new SimpleList<>();
+    }
     
 	private void calcFirsts() {
 		final SimpleList < Object[] > temp = new SimpleList <>( grammar );
@@ -587,10 +594,12 @@ public class PredictiveNonRecursive {
 		temp1.append(tokenizedString);
 		temp1.append("$");
 		String eval = temp1.toString();
-		System.out.println(tokenizedString);
+		newLines.append(tokenizedString);
+		//System.out.println(tokenizedString);
 		return true;
 	}
-	StringBuilder tokenized ;
+	
+	private StringBuilder tokenized;
 	private String tokenize(String rawString,String s2){
 		if ( rawString == ""){
 			return "";
@@ -627,5 +636,38 @@ public class PredictiveNonRecursive {
 		}
 		//Recorrer el string en busca de terminales.
 		return tokenized.toString();
+	}
+	
+	public boolean isTextCorrect(){
+		SimpleList<String> newLinesC = new SimpleList<>(newLines);
+		String Line;
+		boolean is = true;
+		int line = 1;
+		//Check line by line its validity. Or logs the line of error.
+		while(newLinesC.getData() != null){ 
+			Line = newLinesC.getData();
+			is = isLineCorrect(Line);
+			if(!is){
+				this.errors.append("Se encontró error en la Linea " + line 
+						+ ": " + "[" + Line + "]");
+			}
+			newLinesC.delete();
+			line++;
+		}
+		errors.describe();
+		if (errors.length() > 0){
+			return false;
+		}
+		return true; 
+	}
+	
+	public boolean isLineCorrect(String Line){
+		for(String terminal : terminals){
+			Line.replace(terminal,"");
+		}
+		if(Line != ""){
+			return false;
+		}
+		return true;		
 	}
 }
