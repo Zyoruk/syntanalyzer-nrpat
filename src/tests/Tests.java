@@ -5,6 +5,7 @@ import grammarCheck.GrammarChecker.lexerror;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -41,16 +42,16 @@ public class Tests {
 		final TableModel table = new PredictiveNonRecursive().createTable(matrix);
 	}
 
-	//@Test
+	@Test
 	public void test() {
 		//fail("Not yet implemented");
 //		String thePath = "./grammar/Gramatica.txt";
 		String  thePath ="./evals/Evaluaciones.txt";
 		Reader r;
 		try {
-			//r = new FileReader(thePath);
-			r = new StringReader("hola1234");
-//			 r =new InputStreamReader(new FileInputStream(thePath), "Cp1252");
+//			r = new FileReader(thePath);
+//			r = new StringReader("hola1234");
+			 r =new InputStreamReader(new FileInputStream(thePath), "Cp1252");
 			 new GrammarChecker(new BufferedReader(r));
 		} catch (IOException | lexerror e) {
 			e.printStackTrace();
@@ -89,7 +90,7 @@ public class Tests {
 	System.out.println( t4 );
     }
 
-    @Test
+   // @Test
     public void test6() throws IOException, lexerror {
 		final FilesManager file = new FilesManager();
 		final SimpleList < Object[] > matrix = new SimpleList < Object[] >();
@@ -109,7 +110,13 @@ public class Tests {
 			pR.evalString(fileLines.getElementAt(i));
 		}
 		
-		pR.isTextCorrect();
+		if(pR.isTextCorrect()){
+			System.out.println("Everything is awesome");
+		}else{
+			System.out.println("Everything is !cool");
+			pR.errors.describe();
+		}
+		
     }
     
 }

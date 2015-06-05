@@ -25,7 +25,7 @@ public class PredictiveNonRecursive {
     TableModel	      tb;
     String[] produc;
     SimpleList<String> newLines;
-    SimpleList<String> errors;
+    public SimpleList<String> errors;
 
     public void init(){
     	newLines = new SimpleList<>();
@@ -648,13 +648,14 @@ public class PredictiveNonRecursive {
 			Line = newLinesC.getData();
 			is = isLineCorrect(Line);
 			if(!is){
-				this.errors.append("Se encontró error en la Linea " + line 
-						+ ": " + "[" + Line + "]");
+				String algo = Integer.toString(line);
+				errors.append("Se encontró error en la Linea " + algo + ": " + "[" + Line + "]");
 			}
+			//System.out.println(Line);
 			newLinesC.delete();
 			line++;
 		}
-		errors.describe();
+		
 		if (errors.length() > 0){
 			return false;
 		}
@@ -663,9 +664,14 @@ public class PredictiveNonRecursive {
 	
 	public boolean isLineCorrect(String Line){
 		for(String terminal : terminals){
-			Line.replace(terminal,"");
+			//
+			for(int i = 0; i < Line.length(); i++){
+				Line.replace(terminal,"");
+			}
 		}
+//		System.out.println(Line);
 		if(Line != ""){
+			//System.out.println(Line);
 			return false;
 		}
 		return true;		
