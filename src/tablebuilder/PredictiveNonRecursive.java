@@ -594,13 +594,8 @@ public class PredictiveNonRecursive {
 		temp1.append(tokenizedString);
 		temp1.append("$");
 		String eval = temp1.toString();
-<<<<<<< HEAD
 		newLines.append(tokenizedString);
 		//System.out.println(tokenizedString);
-=======
-		System.out.println(temp1);
-		
->>>>>>> 979ca03b0efc40ede36b906378b310c7d4314ba1
 		return true;
 	}
 	
