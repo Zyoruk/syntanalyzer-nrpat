@@ -594,18 +594,23 @@ public class PredictiveNonRecursive {
 		temp1.append(tokenizedString);
 		temp1.append("$");
 		String eval = temp1.toString();
+<<<<<<< HEAD
 		newLines.append(tokenizedString);
 		//System.out.println(tokenizedString);
+=======
+		System.out.println(temp1);
+		
+>>>>>>> 979ca03b0efc40ede36b906378b310c7d4314ba1
 		return true;
 	}
 	
 	private StringBuilder tokenized;
 	private String tokenize(String rawString,String s2){
-		if ( rawString == ""){
-			return "";
-		}else if(rawString.length() == 1){
-			return rawString;
-		}
+//		if ( rawString == ""){
+//			return "id";
+//		}else if(rawString.length() == 1){
+//			return "id";
+//		}
 		tokenized = new StringBuilder();
 		
 		String s = rawString;
